@@ -11,6 +11,8 @@ jobs:
       DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
       - name: Set executable permissions
         run: chmod +x ./release.sh
       - name: Execute publishing script
