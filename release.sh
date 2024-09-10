@@ -13,7 +13,10 @@ docker build -f Dockerfile.openresty.alpine -t  zhiqiangwang/docker:openresty-al
 docker push zhiqiangwang/docker:openresty-alpine
 
 
-echo "Release docker:ubuntu-ssh"
-docker build -f Dockerfile.ssh -t  zhiqiangwang/docker:ubuntu-ssh  .
-docker push zhiqiangwang/docker:ubuntu-ssh
+echo "Release docker:docker:xray"
+docker build -f Dockerfile.xray -t  zhiqiangwang/docker:xray  .
+docker push zhiqiangwang/docker:xray
 
+echo "Release docker:docker:v2ray"
+docker build -f Dockerfile.v2ray -t  zhiqiangwang/docker:v2ray  .
+docker push zhiqiangwang/docker:v2ray
