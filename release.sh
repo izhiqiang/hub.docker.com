@@ -32,7 +32,7 @@ if [[ $xray_version =~ ^v ]]; then
 fi
 echo "xray current version:${xray_current_version}  Online version:${xray_version}"
 if [[ "$xray_version" != "$xray_current_version" ]]; then
-  docker build -build-arg="XRAY_TAG=${xray_version}" -f Dockerfile.xray -t  zhiqiangwang/docker:xray  .
+  docker build --build-arg="XRAY_TAG=${xray_version}" -f Dockerfile.xray -t  zhiqiangwang/docker:xray  .
   docker push zhiqiangwang/docker:xray
   echo "$xray_version" > xray/version
   git add xray/version
