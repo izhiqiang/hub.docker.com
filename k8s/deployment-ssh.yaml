@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-serve
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-ssh-tunnel
+  labels:
+    app: ubuntu-ssh-tunnel
+  namespace: kube-serve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-ssh-tunnel
+  template:
+    metadata:
+      labels:
+        app: ubuntu-ssh-tunnel
+    spec:
+      containers:
+        - name: ubuntu-ssh-tunnel
+          env:
+            - name: SSH_USER
+              value: k8ssshuser
+            - name: SSH_PASSWORD
+              value: k8ssshpassword
+          image: zhiqiangwang/docker:ubuntu-ssh
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 500Mi
+          ports:
+            - containerPort: 22
+              name: tcp-22
+              protocol: TCP

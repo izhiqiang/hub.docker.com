@@ -1,0 +1,22 @@
+FROM ubuntu:22.04
+# 安装必要的软件和SSH服务
+RUN apt-get update && \
+    apt-get install -y openssh-server sudo && \
+    mkdir /var/run/sshd
+# 允许 SSH 访问
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# 设置 SSH 用户和密码的环境变量
+ENV SSH_USER=ubuntu
+ENV SSH_PASSWORD=123456
+# 将bin目录下可执行文件添加到/usr/local/bin下
+COPY ssh/ssshd /usr/local/bin/
+# 赋予启动sshd可执行文件权限
+RUN chmod +x /usr/local/bin/ssshd
+# 开放端口
+EXPOSE 22
+# 清理缓存
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# 启动SSH服务
+ENTRYPOINT ["ssshd"]
+# Use SIGQUIT instead of default SIGTERM to cleanly drain requests
+STOPSIGNAL SIGQUIT
